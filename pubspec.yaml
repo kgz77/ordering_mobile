@@ -48,6 +48,8 @@ dependencies:
   get_it: ^7.6.0
   fluttertoast: ^8.2.2
   random_string: ^2.3.1
+  line_awesome_flutter: ^2.0.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

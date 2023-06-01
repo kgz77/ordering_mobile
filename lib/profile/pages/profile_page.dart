@@ -1,188 +1,144 @@
-// import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:foda/components/app_scaffold.dart';
+import 'package:foda/components/foda_button.dart';
+import 'package:foda/repositories/user_repository.dart';
+import 'package:foda/screens/authentication/authentication_state.dart';
+import 'package:foda/services/authentication_service.dart';
+import 'package:foda/services/get_it.dart';
+import 'package:foda/themes/app_theme.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-// import 'package:flutter/material.dart';
-// import 'package:foda/components/app_scaffold.dart';
+import 'profile_menu.dart';
 
-// import '../../models/user.dart';
-// import '../../repositories/user_repository.dart';
-// import '../../services/authentication_service.dart';
-// import '../../services/get_it.dart';
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  Widget build(BuildContext context) {
+    final userRepo = locate<UserRepository>();
+    final userId = AuthenicationService.instance.auth.currentUser!.uid;
+    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    return AppScaffold(
+      // appBar: AppBar(
+      //   leading: IconButton(
+      //       onPressed: () => null,
+      //       icon: const Icon(LineAwesomeIcons.angle_left)),
+      //   title: Text("tProfile", style: Theme.of(context).textTheme.headline4),
+      //   actions: [
+      //     IconButton(
+      //         onPressed: () {},
+      //         icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
+      //   ],
+      // ),
+      body: StreamBuilder(
+        stream: userRepo.listenToCurrentUser(userId),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Container();
+          }
+          return SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(40, 120, 40, 80),
+              // width: 10,
+              child: Column(
+                children: [
+                  /// -- IMAGE
+                  Stack(
+                    children: [
+                      SizedBox(
+                        width: 140,
+                        height: 140,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(70),
+                            child:
+                                Image.network(snapshot.data!.profileImageUrl)),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          width: 35,
+                          height: 35,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(150),
+                              color: AppTheme.purple),
+                          child: const Icon(
+                            LineAwesomeIcons.alternate_pencil,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(snapshot.data!.name,
+                      style: Theme.of(context).textTheme.headline4),
+                  Text(snapshot.data!.email,
+                      style: Theme.of(context).textTheme.bodyText2),
+                  const SizedBox(height: 20),
 
-// // This class handles the Page to dispaly the user's info on the "Edit Profile" Screen
-// class ProfilePage extends StatefulWidget {
-//   @override
-//   _ProfilePageState createState() => _ProfilePageState();
-// }
+                  /// -- BUTTON
+                  const SizedBox(
+                    width: 250,
+                    child: FodaButton(
+                      onTap: null,
+                      title: "Edit profile",
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  const Divider(),
+                  const SizedBox(height: 10),
 
-// class _ProfilePageState extends State<ProfilePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final userRepo = locate<UserRepository>();
-//     final userUID = AuthenicationService.instance.auth.currentUser!.uid;
-
-//     return AppScaffold(
-//       body: Column(
-//         children: [
-//           AppBar(
-//             backgroundColor: Colors.transparent,
-//             elevation: 0,
-//             toolbarHeight: 10,
-//           ),
-//           StreamBuilder(
-//             stream: userRepo.listenToCurrentUser(userUID),
-//             builder: ((context, snapshot) {
-//               if (!snapshot.hasData) {
-//                 return CircularProgressIndicator();
-//               }
-//               return Container(
-//                 child: Column(children: [
-//                   Center(
-//                       child: Padding(
-//                           padding: EdgeInsets.only(bottom: 20),
-//                           child: Text(
-//                             'Edit Profile',
-//                             style: TextStyle(
-//                               fontSize: 30,
-//                               fontWeight: FontWeight.w700,
-//                               color: Color.fromRGBO(64, 105, 225, 1),
-//                             ),
-//                           ))),
-//                   InkWell(
-//                     onTap: () {
-//                       // navigateSecondPage(EditImagePage());
-//                     },
-//                     child: DisplayImage(
-//                       imagePath: snapshot.data!.profileImageUrl,
-//                       onPressed: () {},
-//                     ),
-//                   ),
-//                   // buildUserInfoDisplay(user.name, 'Name', EditNameFormPage()),
-//                   // buildUserInfoDisplay(user.phone, 'Phone', EditPhoneFormPage()),
-//                   // buildUserInfoDisplay(user.email, 'Email', EditEmailFormPage()),
-//                   buildUserInfoDisplay(
-//                       snapshot.data!.name, 'Name', Container()),
-//                   buildUserInfoDisplay(
-//                       snapshot.data!.phone, 'Phone', Container()),
-//                   buildUserInfoDisplay(
-//                       snapshot.data!.email, 'Email', Container()),
-//                   // Expanded(
-//                   //   child: buildAbout(user),
-//                   //   flex: 4,
-//                   // ),
-//                 ]),
-//               );
-//             }),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   // Widget builds the display item with the proper formatting to display the user's info
-//   Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
-//       Padding(
-//           padding: EdgeInsets.only(bottom: 10),
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text(
-//                 title,
-//                 style: TextStyle(
-//                   fontSize: 15,
-//                   fontWeight: FontWeight.w500,
-//                   color: Colors.grey,
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 1,
-//               ),
-//               Container(
-//                   width: 350,
-//                   height: 40,
-//                   decoration: BoxDecoration(
-//                       border: Border(
-//                           bottom: BorderSide(
-//                     color: Colors.grey,
-//                     width: 1,
-//                   ))),
-//                   child: Row(children: [
-//                     Expanded(
-//                         child: TextButton(
-//                             onPressed: () {
-//                               // navigateSecondPage(editPage);
-//                             },
-//                             child: Text(
-//                               getValue,
-//                               style: TextStyle(fontSize: 16, height: 1.4),
-//                             ))),
-//                     Icon(
-//                       Icons.keyboard_arrow_right,
-//                       color: Colors.grey,
-//                       size: 40.0,
-//                     )
-//                   ]))
-//             ],
-//           ));
-
-//   // Widget builds the About Me Section
-//   // Widget buildAbout(User user) => Padding(
-//   //     padding: EdgeInsets.only(bottom: 10),
-//   //     child: Column(
-//   //       crossAxisAlignment: CrossAxisAlignment.start,
-//   //       children: [
-//   //         Text(
-//   //           'Tell Us About Yourself',
-//   //           style: TextStyle(
-//   //             fontSize: 15,
-//   //             fontWeight: FontWeight.w500,
-//   //             color: Colors.grey,
-//   //           ),
-//   //         ),
-//   //         const SizedBox(height: 1),
-//   //         Container(
-//   //             width: 350,
-//   //             height: 200,
-//   //             decoration: BoxDecoration(
-//   //                 border: Border(
-//   //                     bottom: BorderSide(
-//   //               color: Colors.grey,
-//   //               width: 1,
-//   //             ))),
-//   //             child: Row(children: [
-//   //               Expanded(
-//   //                   child: TextButton(
-//   //                       onPressed: () {
-//   //                         // navigateSecondPage(EditDescriptionFormPage());
-//   //                       },
-//   //                       child: Padding(
-//   //                           padding: EdgeInsets.fromLTRB(0, 10, 10, 10),
-//   //                           child: Align(
-//   //                               alignment: Alignment.topLeft,
-//   //                               child: Text(
-//   //                                 // user.aboutMeDescription,
-//   //                                 style: TextStyle(
-//   //                                   fontSize: 16,
-//   //                                   height: 1.4,
-//   //                                 ),
-//   //                               ))))),
-//   //               Icon(
-//   //                 Icons.keyboard_arrow_right,
-//   //                 color: Colors.grey,
-//   //                 size: 40.0,
-//   //               )
-//   //             ]))
-//   //       ],
-//   //     ));
-
-//   // Refrshes the Page after updating user info.
-//   FutureOr onGoBack(dynamic value) {
-//     setState(() {});
-//   }
-
-//   // Handles navigation and prompts refresh.
-//   void navigateSecondPage(Widget editForm) {
-//     Route route = MaterialPageRoute(builder: (context) => editForm);
-//     Navigator.push(context, route).then(onGoBack);
-//   }
-// }
+                  /// -- MENU
+                  ProfileMenuWidget(
+                      title: "Settings",
+                      icon: LineAwesomeIcons.cog,
+                      onPress: () {}),
+                  ProfileMenuWidget(
+                      title: "Billing Details",
+                      icon: LineAwesomeIcons.wallet,
+                      onPress: () {}),
+                  ProfileMenuWidget(
+                      title: "User Management",
+                      icon: LineAwesomeIcons.user_check,
+                      onPress: () {}),
+                  const Divider(),
+                  const SizedBox(height: 10),
+                  ProfileMenuWidget(
+                      title: "Information",
+                      icon: LineAwesomeIcons.info,
+                      onPress: () {}),
+                  ProfileMenuWidget(
+                      title: "Logout",
+                      icon: LineAwesomeIcons.alternate_sign_out,
+                      textColor: Colors.red,
+                      endIcon: false,
+                      onPress: () {
+                        // Get.defaultDialog(
+                        //   title: "LOGOUT",
+                        //   titleStyle: const TextStyle(fontSize: 20),
+                        //   content: const Padding(
+                        //     padding: EdgeInsets.symmetric(vertical: 15.0),
+                        //     child: Text("Are you sure, you want to Logout?"),
+                        //   ),
+                        //   confirm: Expanded(
+                        //     child: ElevatedButton(
+                        //       onPressed: () => AuthenticationRepository.instance.logout(),
+                        //       style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent, side: BorderSide.none),
+                        //       child: const Text("Yes"),
+                        //     ),
+                        //   ),
+                        //   cancel: OutlinedButton(onPressed: () => Get.back(), child: const Text("No")),
+                        // );
+                        null;
+                      }),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
