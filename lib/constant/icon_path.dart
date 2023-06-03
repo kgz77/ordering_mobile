@@ -5,4 +5,5 @@ class IconPath {
   static const String search = "assets/icons/search.png";
   static const String menu = "assets/icons/menu.png";
   static const String bag = "assets/icons/bag.png";
+  // static const String cart = "assets/icons/"
 }

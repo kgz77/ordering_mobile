@@ -7,8 +7,12 @@ import 'package:foda/screens/authentication/authentication_state.dart';
 import 'package:foda/services/authentication_service.dart';
 import 'package:foda/services/get_it.dart';
 import 'package:foda/themes/app_theme.dart';
+import 'package:foda/utils/common.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+
+import '../../constant/route_name.dart';
+import '../../screens/authentication/authentication_view.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -20,16 +24,23 @@ class UpdateProfileScreen extends StatefulWidget {
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(ProfileController());
     final userRepo = locate<UserRepository>();
     final userId = AuthenicationService.instance.auth.currentUser!.uid;
     return AppScaffold(
-      body: StreamBuilder(
-        stream: userRepo.listenToCurrentUser(userId),
+      body: FutureBuilder(
+        future: userRepo.getCurrentUser(userId),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Container();
           }
+          print(snapshot.data!.right);
+
+          TextEditingController name =
+              TextEditingController(text: snapshot.data!.right.name);
+          TextEditingController phone =
+              TextEditingController(text: snapshot.data!.right.phone);
+          TextEditingController address =
+              TextEditingController(text: snapshot.data!.right.address);
 
           return SingleChildScrollView(
             child: Container(
@@ -43,7 +54,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       height: 120,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.network(snapshot.data!.profileImageUrl)),
+                          child: Image.network(
+                              snapshot.data!.right.profileImageUrl)),
                     ),
                     Positioned(
                       bottom: 0,
@@ -54,8 +66,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: AppTheme.white),
-                        // child: Icon(LineAwesomeIcons.camera,
-                        //     color: Colors.black, size: 20),
                         child: IconButton(
                           onPressed: () {},
                           color: Colors.brown,
@@ -75,7 +85,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   child: Column(
                     children: [
                       TextFormField(
-                        initialValue: snapshot.data!.name,
+                        controller: name,
                         decoration: const InputDecoration(
                             label: Text("ФИО"),
                             prefixIcon: Icon(
@@ -85,7 +95,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ),
                       const SizedBox(height: 50 - 20),
                       TextFormField(
-                        initialValue: snapshot.data!.email,
+                        initialValue: snapshot.data!.right.email,
                         readOnly: true,
                         decoration: const InputDecoration(
                             label: Text("Электронная почта"),
@@ -96,9 +106,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ),
                       const SizedBox(height: 50 - 20),
                       TextFormField(
-                        initialValue: snapshot.data!.phone,
+                        controller: phone,
                         decoration: InputDecoration(
-                            label: snapshot.data!.phone.isEmpty
+                            label: snapshot.data!.right.phone.isEmpty
                                 ? const Text("Добавьте номер телефона")
                                 : const Text("Номер телефона"),
                             prefixIcon: const Icon(
@@ -108,37 +118,72 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ),
                       const SizedBox(height: 50 - 20),
                       TextFormField(
-                        initialValue: snapshot.data!.phone,
+                        controller: address,
+                        // initialValue: snapshot.data!.address,
                         decoration: InputDecoration(
-                            label: snapshot.data!.phone.isEmpty
+                            label: address.text.isEmpty
                                 ? const Text("Укажите адрес")
-                                : const Text("Номер телефона"),
+                                : const Text("Адрес"),
                             prefixIcon: const Icon(
-                              LineAwesomeIcons.phone,
+                              LineAwesomeIcons.location_arrow,
                               color: Colors.blue,
                             )),
                       ),
-                      const SizedBox(height: 50 - 20),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          label: const Text("tPassword"),
-                          prefixIcon: const Icon(Icons.fingerprint),
-                          suffixIcon: IconButton(
-                              icon: const Icon(LineAwesomeIcons.eye_slash),
-                              onPressed: () {}),
-                        ),
-                      ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 50 - 20),
+                      // TextFormField(
+                      //   obscureText: true,
+                      //   decoration: InputDecoration(
+                      //     label: const Text("tPassword"),
+                      //     prefixIcon: const Icon(Icons.fingerprint),
+                      //     suffixIcon: IconButton(
+                      //         icon: const Icon(LineAwesomeIcons.eye_slash),
+                      //         onPressed: () {}),
+                      //   ),
+                      // ),
+
+                      // const SizedBox(height: 30),
 
                       // -- Form Submit Button
                       SizedBox(
                         width: double.infinity,
                         child: FodaButton(
-                          onTap: () {},
-                          title: "Edit profile",
+                          onTap: () async {
+                            DocumentReference documentReference =
+                                FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(userId);
+                            await FirebaseFirestore.instance
+                                .runTransaction((transaction) async {
+                              DocumentSnapshot documentSnapshot =
+                                  await transaction.get(documentReference);
+                              await transaction
+                                  .update(documentSnapshot.reference, {
+                                'name': name.text,
+                                'phone': phone.text,
+                                'address': address.text,
+                              });
+                            });
+                            showCustomToast("Данные обновлены!");
+                          },
+                          title: "Редактировать",
                         ),
+                      ),
+
+                      SizedBox(
+                        height: 30,
+                      ),
+                      FodaButton(
+                        gradiant: [AppTheme.orange, AppTheme.red],
+                        onTap: () async {
+                          await userRepo.logout();
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            authPath,
+                            (route) => false,
+                            arguments: AuthenticationViewState.signIn,
+                          );
+                        },
+                        title: 'Выйти',
                       ),
                       const SizedBox(height: 100),
 
@@ -152,8 +197,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               style: TextStyle(fontSize: 12),
                               children: [
                                 TextSpan(
-                                    text:
-                                        readTimestamp(snapshot.data!.createdAt),
+                                    text: readTimestamp(
+                                        snapshot.data!.right.createdAt),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12))

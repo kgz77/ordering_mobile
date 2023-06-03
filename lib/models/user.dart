@@ -16,6 +16,8 @@ class User extends Equatable {
   final int dob;
   final List<String> favorites;
 
+  final String address;
+
   const User({
     required this.uid,
     required this.email,
@@ -27,6 +29,7 @@ class User extends Equatable {
     required this.isActive,
     required this.dob,
     required this.favorites,
+    required this.address,
   });
 
   @override
@@ -56,19 +59,20 @@ class User extends Equatable {
     bool? isActive,
     int? dob,
     List<String>? favorites,
+    String? address,
   }) {
     return User(
-      uid: uid ?? this.uid,
-      email: email ?? this.email,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
-      profileImageUrl: profileImageUrl ?? this.profileImageUrl,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isActive: isActive ?? this.isActive,
-      dob: dob ?? this.dob,
-      favorites: favorites ?? this.favorites,
-    );
+        uid: uid ?? this.uid,
+        email: email ?? this.email,
+        name: name ?? this.name,
+        phone: phone ?? this.phone,
+        profileImageUrl: profileImageUrl ?? this.profileImageUrl,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        isActive: isActive ?? this.isActive,
+        dob: dob ?? this.dob,
+        favorites: favorites ?? this.favorites,
+        address: address ?? this.address);
   }
 
   Map<String, dynamic> toMap() {
@@ -83,6 +87,7 @@ class User extends Equatable {
       'isActive': isActive,
       'dob': dob,
       'favorites': favorites,
+      'address': address,
     };
   }
 
@@ -98,6 +103,7 @@ class User extends Equatable {
       isActive: map['isActive'] ?? false,
       dob: map['dob'] ?? 0,
       favorites: List<String>.from(map['favorites'] ?? []),
+      address: map['address'] ?? '',
     );
   }
 

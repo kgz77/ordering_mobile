@@ -29,17 +29,28 @@ class AppBottomNavigationBar extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Image.asset(IconPath.favourite),
-                activeIcon: Image.asset(IconPath.favourite, color: AppTheme.orange),
+                activeIcon:
+                    Image.asset(IconPath.favourite, color: AppTheme.orange),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset(
+                  IconPath.bag,
+                  color: AppTheme.white,
+                ),
+                activeIcon: Image.asset(IconPath.bag, color: AppTheme.orange),
                 label: "",
               ),
               BottomNavigationBarItem(
                 icon: Image.asset(IconPath.search),
-                activeIcon: Image.asset(IconPath.search, color: AppTheme.orange),
+                activeIcon:
+                    Image.asset(IconPath.search, color: AppTheme.orange),
                 label: "",
               ),
               BottomNavigationBarItem(
                 icon: Image.asset(IconPath.account),
-                activeIcon: Image.asset(IconPath.account, color: AppTheme.orange),
+                activeIcon:
+                    Image.asset(IconPath.account, color: AppTheme.orange),
                 label: "",
               ),
             ],
@@ -49,7 +60,10 @@ class AppBottomNavigationBar extends StatelessWidget {
             type: BottomNavigationBarType.fixed,
             backgroundColor: Colors.transparent,
             unselectedLabelStyle: Theme.of(context).textTheme.caption,
-            selectedLabelStyle: Theme.of(context).textTheme.caption?.copyWith(fontWeight: FontWeight.w700),
+            selectedLabelStyle: Theme.of(context)
+                .textTheme
+                .caption
+                ?.copyWith(fontWeight: FontWeight.w700),
             showSelectedLabels: true,
             showUnselectedLabels: true,
           );

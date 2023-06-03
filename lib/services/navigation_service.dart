@@ -5,6 +5,7 @@ import 'package:foda/constant/route_name.dart';
 import 'package:foda/models/food.dart';
 import 'package:foda/repositories/user_repository.dart';
 import 'package:foda/screens/authentication/authentication_view.dart';
+import 'package:foda/screens/cart/cart.dart';
 import 'package:foda/screens/checkout/checkout_view.dart';
 import 'package:foda/screens/checkout/pages/cart.dart';
 import 'package:foda/screens/food_detail/food_detail.dart';
@@ -28,6 +29,7 @@ class NavigationService {
     authPath,
     welcomePath,
     cartPath,
+    cartPage,
   ];
 
   void setNavigationBar(bool value,
@@ -67,6 +69,9 @@ class NavigationService {
 
       case cartPath:
         return _navigateToModelPageRoute(settings, const CheckoutView());
+
+      case cartPage:
+        return _navigateToModelPageRoute(settings, const CartPage());
 
       case foodDetailPath:
         final food = settings.arguments as Food?;

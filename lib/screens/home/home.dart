@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foda/screens/home/components/app_bar.dart';
 import 'package:foda/screens/home/components/food_card.dart';
 import 'package:foda/states/overview_state.dart';
+import 'package:foda/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 import '../../components/app_scaffold.dart';
 import '../../models/food.dart';
@@ -24,6 +25,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       body: Column(
         children: [
           const HomeAppBar(),
+          // SearchBar(
+          //   backgroundColor:
+          //       MaterialStateColor.resolveWith((states) => Colors.amberAccent),
+          //   overlayColor:
+          //       MaterialStateColor.resolveWith((states) => Colors.amber),
+          //   hintText: "Search",
+          // ),
           Expanded(
             child: ValueListenableBuilder<List<Food>>(
               valueListenable: state.foodRepository.foodsNotifier,
@@ -40,7 +48,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   itemCount: foods.length,
                   itemBuilder: (context, index) {
                     double _scaleFactor = currentPage == index ? 1 : 0.5;
-                    Offset offset = currentPage == index ? const Offset(100, 0) : const Offset(220, 400);
+                    Offset offset = currentPage == index
+                        ? const Offset(100, 0)
+                        : const Offset(220, 400);
 
                     return Transform.scale(
                       scale: _scaleFactor,

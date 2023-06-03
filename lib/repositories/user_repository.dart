@@ -18,7 +18,8 @@ class UserRepository {
 
   ValueNotifier<User?> currentUserNotifier = ValueNotifier<User?>(null);
 
-  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>? _userStreamSubscriptions;
+  StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>?
+      _userStreamSubscriptions;
 
   StreamSubscription? _authStreamSubscription;
 
@@ -48,7 +49,16 @@ class UserRepository {
     });
   }
 
-  Future<Either<ErrorHandler, User>> registerUser(User user, String password) async {
+  // Future<Either<ErrorHandler, User>> deleteFavoriteFoodById(String uid, String foodId){
+  //   try {
+  //     return usersCollection.doc(foodId).firestore.
+  //   } catch (e) {
+
+  //   }
+  // }
+
+  Future<Either<ErrorHandler, User>> registerUser(
+      User user, String password) async {
     try {
       final firebaseUser = await _authService.signUp(user.email, password);
 
@@ -83,7 +93,8 @@ class UserRepository {
     }
   }
 
-  Future<Either<ErrorHandler, User>> login(String email, String password) async {
+  Future<Either<ErrorHandler, User>> login(
+      String email, String password) async {
     try {
       final firebaseUser = await _authService.logIn(email, password);
 
@@ -123,7 +134,8 @@ class UserRepository {
   Future<Either<ErrorHandler, User>> googleSignIn() async {
     try {
       final firebaseUser = await _authService.googleSignIn();
-      if (firebaseUser == null) return const Left(ErrorHandler(message: "Could not signin"));
+      if (firebaseUser == null)
+        return const Left(ErrorHandler(message: "Could not signin"));
       final snapshot = await usersCollection.doc(firebaseUser.uid).get();
       if (!snapshot.exists) {
         final newUser = User(
@@ -137,6 +149,7 @@ class UserRepository {
           dob: 0,
           favorites: const [],
           name: firebaseUser.displayName ?? "",
+          address: "",
         );
 
         await usersCollection.doc(firebaseUser.uid).set(newUser.toMap());
@@ -156,10 +169,13 @@ class UserRepository {
     }
   }
 
-  Future<Either<ErrorHandler, bool>> addFoodToFavorite(String uid, Food food, {bool isAdding = true}) async {
+  Future<Either<ErrorHandler, bool>> addFoodToFavorite(String uid, Food food,
+      {bool isAdding = true}) async {
     try {
       await usersCollection.doc(uid).update({
-        "favorites": isAdding ? FieldValue.arrayUnion([food.id]) : FieldValue.arrayRemove([food.id]),
+        "favorites": isAdding
+            ? FieldValue.arrayUnion([food.id])
+            : FieldValue.arrayRemove([food.id]),
       });
       return Right(isAdding);
     } catch (e) {

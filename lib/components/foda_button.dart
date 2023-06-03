@@ -34,7 +34,9 @@ class _FodaButtonState extends State<FodaButton> {
     return InkWell(
       onTap: widget.onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: AppTheme.cardPadding * 1.5, vertical: AppTheme.elementSpacing),
+        padding: const EdgeInsets.symmetric(
+            horizontal: AppTheme.cardPadding * 1.5,
+            vertical: AppTheme.elementSpacing),
         height: AppTheme.buttonHeight,
         decoration: BoxDecoration(
             color: defaultColor.length < 2 ? defaultColor.first : null,
@@ -61,7 +63,8 @@ class _FodaButtonState extends State<FodaButton> {
                 children: [
                   if (widget.leadingIcon != null)
                     Padding(
-                      padding: const EdgeInsets.only(right: AppTheme.elementSpacing),
+                      padding:
+                          const EdgeInsets.only(right: AppTheme.elementSpacing),
                       child: widget.leadingIcon,
                     ),
                   Text(

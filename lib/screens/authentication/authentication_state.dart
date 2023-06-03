@@ -50,10 +50,12 @@ class AuthenticationState extends BaseState {
         dob: 0,
         favorites: const [],
         name: nameController.text.trim(),
+        address: "",
       );
 
       setLoading(true);
-      final register = await userRepo.registerUser(user, passwordController.text.trim());
+      final register =
+          await userRepo.registerUser(user, passwordController.text.trim());
       setLoading(false);
 
       if (register.isRight) {
@@ -71,7 +73,8 @@ class AuthenticationState extends BaseState {
     if (validate != null && validate == true && isLoading == false) {
       setLoading(true);
 
-      final register = await userRepo.login(emailController.text.trim(), passwordController.text.trim());
+      final register = await userRepo.login(
+          emailController.text.trim(), passwordController.text.trim());
       setLoading(false);
 
       if (register.isRight) {

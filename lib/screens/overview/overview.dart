@@ -7,6 +7,7 @@ import 'package:foda/states/overview_state.dart';
 import 'package:foda/themes/app_theme.dart';
 import 'package:provider/provider.dart';
 
+import '../cart/cart.dart';
 import '../home/home.dart';
 
 class Overview extends StatelessWidget {
@@ -19,9 +20,10 @@ class Overview extends StatelessWidget {
       body: PageView(
         controller: context.read<OverviewState>().pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
+        children: [
           HomePage(),
           FavoritePage(),
+          CartPage(),
           SearchPage(),
           AccountPage(),
         ],

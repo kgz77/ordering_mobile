@@ -3,3 +3,4 @@ const String welcomePath = '/welcome';
 const String overviewPath = '/overview';
 const String cartPath = '/cart';
 const String foodDetailPath = '/food_detail';
+const String cartPage = '/cart_page';
