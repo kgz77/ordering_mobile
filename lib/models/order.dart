@@ -134,7 +134,7 @@ class OrderItem extends Equatable {
   final int createdAt;
   final int updatedAt;
   final String coverImageUrl;
-  final String category;
+  final String categoryId;
 
   const OrderItem({
     required this.foodId,
@@ -144,7 +144,7 @@ class OrderItem extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.coverImageUrl,
-    required this.category,
+    required this.categoryId,
   });
 
   @override
@@ -157,7 +157,7 @@ class OrderItem extends Equatable {
       createdAt,
       updatedAt,
       coverImageUrl,
-      category,
+      categoryId,
     ];
   }
 
@@ -169,7 +169,7 @@ class OrderItem extends Equatable {
     int? createdAt,
     int? updatedAt,
     String? coverImageUrl,
-    String? category,
+    String? categoryId,
   }) {
     return OrderItem(
       foodId: foodId ?? this.foodId,
@@ -179,7 +179,7 @@ class OrderItem extends Equatable {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       coverImageUrl: coverImageUrl ?? this.coverImageUrl,
-      category: category ?? this.category,
+      categoryId: categoryId ?? this.categoryId,
     );
   }
 
@@ -192,7 +192,7 @@ class OrderItem extends Equatable {
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'coverImageUrl': coverImageUrl,
-      'category': category,
+      'category': categoryId,
     };
   }
 
@@ -205,7 +205,7 @@ class OrderItem extends Equatable {
       createdAt: map['createdAt']?.toInt() ?? 0,
       updatedAt: map['updatedAt']?.toInt() ?? 0,
       coverImageUrl: map['coverImageUrl'] ?? '',
-      category: map['category'] ?? '',
+      categoryId: map['categoryId'] ?? '',
     );
   }
 
@@ -215,6 +215,6 @@ class OrderItem extends Equatable {
 
   @override
   String toString() {
-    return 'OrderItem(foodId: $foodId, title: $title, quantity: $quantity, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, coverImageUrl: $coverImageUrl, category: $category)';
+    return 'OrderItem(foodId: $foodId, title: $title, quantity: $quantity, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, coverImageUrl: $coverImageUrl, categoryId: $categoryId)';
   }
 }

@@ -9,7 +9,7 @@ class Food extends Equatable {
   final String title;
   final String imageUrl;
   final String description;
-  final String category;
+  final String categoryId;
   final int price;
   final int createdAt;
   final int updatedAt;
@@ -21,7 +21,7 @@ class Food extends Equatable {
     required this.title,
     required this.imageUrl,
     required this.description,
-    required this.category,
+    required this.categoryId,
     required this.price,
     required this.createdAt,
     required this.updatedAt,
@@ -34,7 +34,7 @@ class Food extends Equatable {
     String? title,
     String? imageUrl,
     String? description,
-    String? category,
+    String? categoryId,
     int? price,
     int? createdAt,
     int? updatedAt,
@@ -46,7 +46,7 @@ class Food extends Equatable {
       title: title ?? this.title,
       imageUrl: imageUrl ?? this.imageUrl,
       description: description ?? this.description,
-      category: category ?? this.category,
+      categoryId: categoryId ?? this.categoryId,
       price: price ?? this.price,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -61,7 +61,7 @@ class Food extends Equatable {
       'title': title,
       'imageUrl': imageUrl,
       'description': description,
-      'category': category,
+      'categoryId': categoryId,
       'price': price,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -76,7 +76,7 @@ class Food extends Equatable {
       title: map['title'] ?? '',
       imageUrl: map['imageUrl'] ?? '',
       description: map['description'] ?? '',
-      category: map['category'] ?? '',
+      categoryId: map['categoryId'] ?? '',
       price: map['price'] ?? 0,
       createdAt: map['createdAt'] ?? 0,
       updatedAt: map['updatedAt'] ?? 0,
@@ -91,7 +91,7 @@ class Food extends Equatable {
 
   @override
   String toString() {
-    return 'Food(id: $id, title: $title, imageUrl: $imageUrl, description: $description, category: $category, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, isLive: $isLive, ingridients: $ingridients)';
+    return 'Food(id: $id, title: $title, imageUrl: $imageUrl, description: $description, categoryId: $categoryId, price: $price, createdAt: $createdAt, updatedAt: $updatedAt, isLive: $isLive, ingridients: $ingridients)';
   }
 
   @override
@@ -101,7 +101,7 @@ class Food extends Equatable {
       title,
       imageUrl,
       description,
-      category,
+      categoryId,
       price,
       createdAt,
       updatedAt,

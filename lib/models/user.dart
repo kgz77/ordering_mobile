@@ -15,7 +15,6 @@ class User extends Equatable {
   final bool isActive;
   final int dob;
   final List<String> favorites;
-
   final String address;
 
   const User({

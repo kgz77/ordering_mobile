@@ -26,10 +26,13 @@ class SignInView extends StatelessWidget {
             const AuthHeader("Sign In"),
             const SizedBox(height: AppTheme.cardPadding),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppTheme.cardPadding * 2),
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppTheme.cardPadding * 2),
               child: FodaButton(
                 title: "Sign In With Google",
-                state: state.isLoadingGoogle ? ButtonState.loading : ButtonState.idle,
+                state: state.isLoadingGoogle
+                    ? ButtonState.loading
+                    : ButtonState.idle,
                 gradiant: const [
                   AppTheme.orange,
                   AppTheme.red,
@@ -44,7 +47,10 @@ class SignInView extends StatelessWidget {
             const SizedBox(height: AppTheme.cardPadding),
             Text(
               "Or with Email",
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(color: AppTheme.grey),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  ?.copyWith(color: AppTheme.grey),
             ),
             const SizedBox(height: AppTheme.cardPadding),
             FodaTextfield(

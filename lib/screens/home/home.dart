@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foda/models/category.dart';
 import 'package:foda/screens/home/components/app_bar.dart';
 import 'package:foda/screens/home/components/food_card.dart';
 import 'package:foda/states/overview_state.dart';
@@ -16,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int currentPage = 0;
+  String categoryId = "1";
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +34,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           //       MaterialStateColor.resolveWith((states) => Colors.amber),
           //   hintText: "Search",
           // ),
+
+          Container(
+            constraints: const BoxConstraints(
+              maxHeight: 40,
+            ),
+            child: ValueListenableBuilder<List<Category>>(
+              valueListenable: state.categoryRepository.categoriesNotifier,
+              builder: (context, List<Category> categories, _) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return TextButton(
+                      onPressed: () =>
+                          setState(() => categoryId = categories[index].id),
+                      // ignore: unnecessary_string_interpolations
+                      child: Text("${categories[index].title}"),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+
           Expanded(
             child: ValueListenableBuilder<List<Food>>(
               valueListenable: state.foodRepository.foodsNotifier,
               builder: (context, foods, _) {
+                List<Food> filteredFoods = foods
+                    .where((element) => element.categoryId == categoryId)
+                    .toList();
+
                 return PageView.builder(
                   controller: PageController(viewportFraction: 0.8),
                   physics: const ClampingScrollPhysics(),
@@ -45,7 +75,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       currentPage = index;
                     });
                   },
-                  itemCount: foods.length,
+                  itemCount: filteredFoods.length,
                   itemBuilder: (context, index) {
                     double _scaleFactor = currentPage == index ? 1 : 0.5;
                     Offset offset = currentPage == index
@@ -56,7 +86,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       scale: _scaleFactor,
                       child: Transform.translate(
                         offset: offset,
-                        child: FoodCard(food: foods[index]),
+                        child: FoodCard(food: filteredFoods[index]),
                       ),
                     );
                   },

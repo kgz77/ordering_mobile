@@ -55,7 +55,7 @@ class CheckoutState extends BaseState {
     cartItems.forEach((key, value) {
       try {
         final cartItem = cart.firstWhere((item) => item.foodId == key);
-        final newFood = value.copyWith(category: cartItem.category);
+        final newFood = value.copyWith(categoryId: cartItem.categoryId);
         total += cartItem.quantity * newFood.price;
       } catch (_) {}
     });
@@ -130,7 +130,7 @@ class CheckoutState extends BaseState {
               createdAt: cartItem.createdAt,
               updatedAt: cartItem.updatedAt,
               coverImageUrl: cartItems[cartItem.foodId]!.title,
-              category: cartItems[cartItem.foodId]!.category,
+              categoryId: cartItems[cartItem.foodId]!.categoryId,
             ),
           )
           .toList(),

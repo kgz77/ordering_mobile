@@ -73,7 +73,7 @@ class CartRepository {
           quantity: 1,
           createdAt: dateNow,
           updatedAt: dateNow,
-          category: food.category,
+          categoryId: food.categoryId,
         );
 
         await cartDocRef.set(cartItem.toMap());

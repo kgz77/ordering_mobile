@@ -45,7 +45,7 @@ class OrderComplete extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "Port Harcourt, Nigeria",
+                      state.currentUser.address,
                       style: Theme.of(context).textTheme.bodyText1?.copyWith(
                             color: AppTheme.grey,
                           ),
@@ -63,7 +63,7 @@ class OrderComplete extends StatelessWidget {
                                 const Icon(Icons.call),
                                 const SizedBox(width: AppTheme.elementSpacing * 0.5),
                                 Text(
-                                  "Personal +234XXXX 564",
+                                  "Personal ${state.currentUser.phone}",
                                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
                                         color: AppTheme.grey,
                                       ),

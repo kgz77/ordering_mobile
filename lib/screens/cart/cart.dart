@@ -31,7 +31,7 @@ class _CartPageState extends State<CartPage> {
             return Container();
           }
           var docs = snapshot.data!.docs;
-          print(docs.first.data());
+          // print(docs.first.data());
           return ListView.builder(
             itemCount: docs.length,
             itemBuilder: (context, index) {

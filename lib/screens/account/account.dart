@@ -14,7 +14,6 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userRepo = locate<UserRepository>();
 
     return UpdateProfileScreen();
     // return AppScaffold(

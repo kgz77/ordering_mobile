@@ -11,17 +11,20 @@ import 'package:foda/utils/common.dart';
 
 import '../components/cupertino_model_route.dart';
 import '../models/food.dart';
+import '../repositories/category_repository.dart';
 
 class OverviewState extends BaseState {
   final navigationService = locate<NavigationService>();
   final userRepo = locate<UserRepository>();
   final foodRepository = locate<FoodRepository>();
+  final CategoryRepository categoryRepository = locate<CategoryRepository>();
   final cartRepo = locate<CartRepository>();
 
   PageController pageController = PageController();
 
   OverviewState() {
     foodRepository.getFoods();
+    categoryRepository.getCategories();
     cartRepo.getCart(userRepo.currentUserUID!);
     navigationService.currentIndexNotifier.addListener(_currentIndexListener);
   }

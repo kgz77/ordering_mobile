@@ -1,9 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foda/components/foda_button.dart';
+import 'package:foda/screens/account/account.dart';
+import 'package:foda/screens/authentication/authentication_state.dart';
 import 'package:foda/screens/checkout/checkout_state.dart';
 import 'package:foda/screens/checkout/components/cart_summery.dart';
 import 'package:foda/screens/checkout/components/payment_method.dart';
 import 'package:foda/themes/app_theme.dart';
+import 'package:foda/utils/common.dart';
 import 'package:provider/provider.dart';
 
 class ConfirmOrder extends StatelessWidget {
@@ -43,7 +47,21 @@ class ConfirmOrder extends StatelessWidget {
               AppTheme.orange,
               AppTheme.red,
             ],
-            onTap: context.read<CheckoutState>().placeOrder,
+            onTap: () {
+
+
+              if (state.currentUser.phone.isNotEmpty) {
+                context.read<CheckoutState>().placeOrder();
+                return;
+              }
+
+              showCustomToast(
+                "Заполните обьязательные поля"
+              );
+
+              Navigator.push(context, CupertinoPageRoute(builder: (_) => const AccountPage()));
+
+            },
           ),
         ),
         const SizedBox(height: kToolbarHeight),

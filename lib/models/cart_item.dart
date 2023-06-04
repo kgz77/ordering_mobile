@@ -4,14 +4,14 @@ import 'package:equatable/equatable.dart';
 
 class CartItem extends Equatable {
   final String foodId;
-  final String category;
+  final String categoryId;
   final int quantity;
   final int createdAt;
   final int updatedAt;
 
   const CartItem({
     required this.foodId,
-    required this.category,
+    required this.categoryId,
     required this.quantity,
     required this.createdAt,
     required this.updatedAt,
@@ -21,7 +21,7 @@ class CartItem extends Equatable {
   List<Object> get props {
     return [
       foodId,
-      category,
+      categoryId,
       quantity,
       createdAt,
       updatedAt,
@@ -37,7 +37,7 @@ class CartItem extends Equatable {
   }) {
     return CartItem(
       foodId: foodId ?? this.foodId,
-      category: category ?? this.category,
+      categoryId: category ?? this.categoryId,
       quantity: quantity ?? this.quantity,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
@@ -47,7 +47,7 @@ class CartItem extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'foodId': foodId,
-      'category': category,
+      'categoryId': categoryId,
       'quantity': quantity,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
@@ -57,7 +57,7 @@ class CartItem extends Equatable {
   factory CartItem.fromMap(Map<String, dynamic> map) {
     return CartItem(
       foodId: map['foodId'] ?? '',
-      category: map['category'] ?? '',
+      categoryId: map['categoryId'] ?? '',
       quantity: map['quantity']?.toInt() ?? 0,
       createdAt: map['createdAt']?.toInt() ?? 0,
       updatedAt: map['updatedAt']?.toInt() ?? 0,
@@ -70,6 +70,6 @@ class CartItem extends Equatable {
 
   @override
   String toString() {
-    return 'CartItem(foodId: $foodId, category: $category, quantity: $quantity, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'CartItem(foodId: $foodId, categoryId: $categoryId, quantity: $quantity, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
