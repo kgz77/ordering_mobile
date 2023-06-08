@@ -1,4 +1,4 @@
-# foda
+# Mobile app for ordering
 
 A new Flutter project.
 
