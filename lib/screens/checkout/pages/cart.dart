@@ -18,7 +18,7 @@ class CartView extends StatelessWidget {
       children: [
         const SizedBox(height: AppTheme.elementSpacing),
         Text(
-          "Your Order",
+          "Ваш заказ",
           style: Theme.of(context).textTheme.headline2?.copyWith(
                 color: AppTheme.orange,
               ),
@@ -35,7 +35,7 @@ class CartView extends StatelessWidget {
               ),
               const SizedBox(height: AppTheme.cardPadding),
               Text(
-                "Cart is Empty",
+                "Корзинка пока пуст",
                 style: Theme.of(context).textTheme.headline6,
               ),
             ],
@@ -46,7 +46,7 @@ class CartView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: AppTheme.cardPadding),
             child: FodaButton(
-              title: 'Confirm Order',
+              title: 'Подтвердить',
               state: state.isLoading ? ButtonState.loading : ButtonState.idle,
               gradiant: const [
                 AppTheme.orange,

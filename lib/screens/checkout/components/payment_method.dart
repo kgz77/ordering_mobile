@@ -15,40 +15,27 @@ class PaymentMethod extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "PAYMENT METHOD",
-          style: Theme.of(context).textTheme.subtitle1,
-        ),
-        Text(
-          "Click one of your card.",
-          style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                color: AppTheme.grey,
-                fontWeight: FontWeight.w400,
-              ),
-        ),
-        const SizedBox(height: AppTheme.cardPadding),
-        Row(
-          children: List.generate(
-            paymentMethods.length,
-            (index) => Row(
-              children: [
-                Radio<bool>(
-                  value: state.selectedPaymentMethod == paymentMethods[index],
-                  groupValue: true,
-                  onChanged: (v) {
-                    state.setPayment(paymentMethods[index]);
-                  },
+        Center(
+          child: Text(
+            "Оплата только наличными.",
+            style: Theme.of(context).textTheme.headline3?.copyWith(
+                  color: AppTheme.white,
+                  fontWeight: FontWeight.w600,
+
                 ),
-                Text(
-                  paymentMethods[index],
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontWeight: FontWeight.w400,
-                      ),
-                ),
-              ],
-            ),
           ),
         ),
+        const SizedBox(height: AppTheme.cardPadding),
+
+                        Center(
+                          child: Container(
+                            height: 270,
+                              width: 270,
+                              child: Image.asset("assets/images/money.png",)),
+                        ),
+                        SizedBox(height: 30,),
+
+
       ],
     );
   }

@@ -22,17 +22,17 @@ class CartItemList extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Total",
+                    "Итого",
                     style: Theme.of(context).textTheme.headline4,
                   ),
                   Text(
-                    "${state.cart.length} items",
+                    "${state.cart.length} позиции",
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           color: AppTheme.grey,
                         ),
                   ),
                   Text(
-                    "\$${state.getTotalAmount}.00",
+                    "${state.getTotalAmount}С̲",
                     style: Theme.of(context).textTheme.headline2?.copyWith(
                           color: AppTheme.red,
                           fontWeight: FontWeight.bold,

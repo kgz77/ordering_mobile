@@ -18,7 +18,7 @@ import '../../services/get_it.dart';
 const int cart = 0;
 const int confirm_order = 1;
 const int complete_order = 2;
-const List<String> paymentMethods = ["Cash", "Credit Card", "Paypal"];
+const List<String> paymentMethods = ["Оплата наличными"];
 
 class CheckoutState extends BaseState {
   final foodRepo = locate<FoodRepository>();
@@ -99,7 +99,7 @@ class CheckoutState extends BaseState {
       setLoading(false);
       if (result.isRight) {
         animateToPage(complete_order);
-        showCustomToast("Order Placed, Thank you!");
+        showCustomToast("Благодарим за заказ!");
       } else {
         showCustomToast("Failed to place order");
       }
@@ -129,7 +129,7 @@ class CheckoutState extends BaseState {
               price: cartItems[cartItem.foodId]!.price,
               createdAt: cartItem.createdAt,
               updatedAt: cartItem.updatedAt,
-              coverImageUrl: cartItems[cartItem.foodId]!.title,
+              coverImageUrl: cartItems[cartItem.foodId]!.imageUrl,
               categoryId: cartItems[cartItem.foodId]!.categoryId,
             ),
           )

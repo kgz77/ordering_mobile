@@ -28,23 +28,23 @@ class OnboardView extends StatelessWidget {
                     height: 400,
                   ),
                   const SizedBox(height: AppTheme.cardPadding),
-                  Image.asset(ImagePath.logo),
+                  // Image.asset(ImagePath.logo),
                   const SizedBox(height: AppTheme.cardPadding),
                   SizedBox(
                     width: AppTheme.size(context).width * 0.6,
                     child: Column(
                       children: [
-                        const AuthHeader("Welcome\nto Food Delivery"),
+                        const AuthHeader("Добро пожаловать"),
                         const SizedBox(height: AppTheme.cardPadding),
                         FodaButton(
-                            title: "Sign In",
+                            title: "Войти",
                             onTap: () {
                               Navigator.of(context).pushNamed(authPath,
                                   arguments: AuthenticationViewState.signIn);
                             }),
                         const SizedBox(height: AppTheme.elementSpacing),
                         FodaButton(
-                          title: "Sign Up",
+                          title: "Зарегистрироваться",
                           gradiant: const [AppTheme.darkBlue],
                           onTap: () {
                             Navigator.of(context).pushNamed(authPath,
@@ -76,7 +76,7 @@ class AuthHeader extends StatelessWidget {
     return Text(
       title,
       textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.headline1?.copyWith(
+      style: Theme.of(context).textTheme.headline2?.copyWith(
             fontWeight: FontWeight.w800,
             color: AppTheme.orange,
             height: 1,

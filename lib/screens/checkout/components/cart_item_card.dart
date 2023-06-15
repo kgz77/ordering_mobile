@@ -60,7 +60,7 @@ class CartItemCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "\$${food!.price * cartItem.quantity}",
+                          "${food!.price * cartItem.quantity} С̲",
                           style: Theme.of(context).textTheme.bodyText1?.copyWith(
                                 color: AppTheme.red,
                                 fontWeight: FontWeight.bold,

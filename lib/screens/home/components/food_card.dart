@@ -20,83 +20,86 @@ class FoodCard extends StatelessWidget {
       },
       child: Column(
         children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Container(
-                height: 300,
-                width: 300,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.black.withOpacity(.6),
-                      spreadRadius: 20,
-                      blurRadius: 20,
-                      offset: const Offset(15, 5),
+          Expanded(
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: 300,
+                  width: 260,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(25),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: AppTheme.black.withOpacity(.6),
+                    //     spreadRadius: 20,
+                    //     blurRadius: 20,
+                    //     offset: const Offset(15, 5),
+                    //   ),
+                    // ],
+                    image: DecorationImage(
+                      image: NetworkImage(food.imageUrl),
+                      fit: BoxFit.cover,
                     ),
-                  ],
-                  image: DecorationImage(
-                    image: NetworkImage(food.imageUrl),
-                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              Positioned(
-                left: 0,
-                bottom: 50,
-                child: FodaCircleButton(
-                  title: "",
-                  gradiant: const [
-                    AppTheme.orange,
-                    AppTheme.orangeDark,
-                  ],
-                  icon: const Icon(
-                    Icons.add,
-                    color: AppTheme.white,
-                    size: 30,
-                  ),
-                  onTap: () {
-                    state.addToCart(food);
-                  },
-                ),
-              ),
-              Positioned(
-                left: 50,
-                bottom: 0,
-                child: FodaCircleButton(
-                  title: "",
-                  gradiant: const [
-                    AppTheme.darkBlue,
-                    AppTheme.darkBlue,
-                  ],
-                  icon: Image.asset(IconPath.favourite),
-                  onTap: () {
-                    state.addToFavorite(food);
-                  },
-                ),
-              ),
-              Positioned(
-                  left: -120,
-                  bottom: 100,
-                  child: SizedBox(
-                    width: 120,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          food.title,
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        const SizedBox(height: AppTheme.elementSpacing * 0.5),
-                        Text(
-                          "\$ ${food.price}",
-                          style: Theme.of(context).textTheme.subtitle1?.copyWith(color: AppTheme.red),
-                        ),
-                      ],
+                Positioned(
+                  left: 85,
+                  bottom: -10,
+                  child: FodaCircleButton(
+                    title: "",
+                    gradiant: const [
+                      AppTheme.orange,
+                      AppTheme.orangeDark,
+                    ],
+                    icon: const Icon(
+                      Icons.add,
+                      color: AppTheme.white,
+                      size: 30,
                     ),
-                  )),
-            ],
+                    onTap: () {
+                      state.addToCart(food);
+                    },
+                  ),
+                ),
+                Positioned(
+                  left: 170,
+                  bottom: 170,
+                  child: FodaCircleButton(
+                    title: "",
+                    gradiant: const [
+                      AppTheme.darkBlue,
+                      AppTheme.darkBlue,
+                    ],
+                    icon: Image.asset(IconPath.favourite),
+                    onTap: () {
+                      state.addToFavorite(food);
+                    },
+                  ),
+                ),
+                Positioned(
+                    left: 9,
+                    bottom: -50,
+                    child: SizedBox(
+                      width: 200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            food.title,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                          const SizedBox(height: 250),
+                          Text(
+                            " ${food.price} С̲",
+                            style: Theme.of(context).textTheme.headline4?.copyWith(color: AppTheme.red),
+                          ),
+                        ],
+                      ),
+                    ),),
+              ],
+            ),
           ),
         ],
       ),

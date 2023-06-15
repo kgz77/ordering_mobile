@@ -23,13 +23,13 @@ class SignInView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const AuthHeader("Sign In"),
+            const AuthHeader("Войти"),
             const SizedBox(height: AppTheme.cardPadding),
             Padding(
               padding: const EdgeInsets.symmetric(
                   horizontal: AppTheme.cardPadding * 2),
               child: FodaButton(
-                title: "Sign In With Google",
+                title: "Войти через Google",
                 state: state.isLoadingGoogle
                     ? ButtonState.loading
                     : ButtonState.idle,
@@ -46,7 +46,7 @@ class SignInView extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.cardPadding),
             Text(
-              "Or with Email",
+              "Или по по почте",
               style: Theme.of(context)
                   .textTheme
                   .bodyText2
@@ -54,17 +54,18 @@ class SignInView extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.cardPadding),
             FodaTextfield(
-              title: "Your Email",
+              title: "Ваша почта",
               controller: state.emailController,
             ),
             const SizedBox(height: AppTheme.elementSpacing),
             FodaTextfield(
-              title: "Password",
+              isPass: true,
+              title: "Пароль",
               controller: state.passwordController,
             ),
             const SizedBox(height: AppTheme.cardPadding),
             FodaButton(
-              title: "Sign In",
+              title: "Войти",
               state: state.isLoading ? ButtonState.loading : ButtonState.idle,
               onTap: state.loginUser,
             ),

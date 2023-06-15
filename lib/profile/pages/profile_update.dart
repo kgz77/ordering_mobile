@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-// import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:editable_image/editable_image.dart';
@@ -21,6 +20,9 @@ import '../../constant/route_name.dart';
 import '../../models/user.dart';
 import '../../screens/authentication/authentication_view.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+
+
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({Key? key}) : super(key: key);
@@ -31,12 +33,21 @@ class UpdateProfileScreen extends StatefulWidget {
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   File? _profileImage;
+  bool buttonState = true;
+
+  void buttonChange(){
+    setState(() {
+      buttonState = !buttonState;
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
+
 
   Future<void> _directUpdateImage(File? file) async {
     if (file == null) return;
@@ -79,7 +90,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       ? null
                       : Image.network(
                     docs['profileImageUrl'],
-                    fit: BoxFit.contain,
+                    fit: BoxFit.cover,
                   ),
                   onChange: _directUpdateImage,
                   size: 150,
@@ -170,6 +181,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               LineAwesomeIcons.phone,
                               color: Colors.blue,
                             )),
+                        inputFormatters: [
+                          MaskedInputFormatter("+996 ### ### ###")],
                       ),
                       const SizedBox(height: 50 - 20),
                       TextFormField(
@@ -204,12 +217,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         width: double.infinity,
                         child: FodaButton(
                           onTap: () async {
-                            String imageUrl = await uploadImageToDefaultBucket(_profileImage!.readAsBytesSync(), "usersPhoto$userId");
+                            buttonChange();
+                            String imageUrl = _profileImage != null ?
+                                await uploadImageToDefaultBucket(
+                                    _profileImage!.readAsBytesSync(),
+                                    "usersPhoto$userId") : '';
 
                             DocumentReference documentReference =
                             FirebaseFirestore.instance
                                 .collection("users")
                                 .doc(userId);
+
                             await FirebaseFirestore.instance
                                 .runTransaction((transaction) async {
                               DocumentSnapshot documentSnapshot =
@@ -217,11 +235,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               await transaction
                                   .update(documentSnapshot.reference, {
                                 'name': name.text,
-                                'profileImageUrl': imageUrl,
+                                'profileImageUrl': imageUrl.isNotEmpty ? imageUrl : docs['profileImageUrl'],
                                 'phone': phone.text,
                                 'address': address.text,
                               });
+
                             });
+                            buttonChange();
+
                             showCustomToast("Данные обновлены!");
 
                             // User? user = context.read<AuthenticationState>().currentUser;
@@ -236,6 +257,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             // }
 
                           },
+                          state: buttonState == true ? ButtonState.idle :ButtonState.loading,
                           title: "Редактировать",
                         ),
                       ),
@@ -325,9 +347,13 @@ String readTimestamp(int timestamp) {
 
 Future<String> uploadImageToDefaultBucket(Uint8List image, String storagePath,
     {String ref = 'users_photos'}) async {
+  // if (image.isEmpty || storagePath.isEmpty){
+  //   return '';
+  // }
   Reference firebaseStorageRef =
   FirebaseStorage.instance.ref(ref).child(storagePath);
   UploadTask uploadTask = firebaseStorageRef.putData(image);
   TaskSnapshot taskSnapshot = await uploadTask;
+
   return taskSnapshot.ref.getDownloadURL();
 }

@@ -50,9 +50,12 @@ dependencies:
   random_string: ^2.3.1
   line_awesome_flutter: ^2.0.0
   intl: ^0.18.1
+  mockito: ^5.0.0
   flutter_svg: ^2.0.6
   editable_image: ^2.0.0
   firebase_storage: ^11.2.2
+  flutter_multi_formatter: ^2.11.1
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:

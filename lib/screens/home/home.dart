@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int currentPage = 0;
-  String categoryId = "1";
+  String categoryId = "2";
 
   @override
   Widget build(BuildContext context) {
@@ -65,32 +65,49 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 List<Food> filteredFoods = foods
                     .where((element) => element.categoryId == categoryId)
                     .toList();
-
-                return PageView.builder(
-                  controller: PageController(viewportFraction: 0.8),
-                  physics: const ClampingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  onPageChanged: (index) {
-                    setState(() {
-                      currentPage = index;
+               return GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 120
+                    ),
+                    itemCount: filteredFoods.length,
+                    itemBuilder: (context, index) {
+                      return FoodCard(food: filteredFoods[index]);
+                      // return Container(
+                      //   alignment: Alignment.center,
+                      //   decoration: BoxDecoration(
+                      //       color: Colors.amber,
+                      //       borderRadius: BorderRadius.circular(15)),
+                      //   child: Text("myProducts"),
+                      // );
                     });
-                  },
-                  itemCount: filteredFoods.length,
-                  itemBuilder: (context, index) {
-                    double _scaleFactor = currentPage == index ? 1 : 0.5;
-                    Offset offset = currentPage == index
-                        ? const Offset(100, 0)
-                        : const Offset(220, 400);
-
-                    return Transform.scale(
-                      scale: _scaleFactor,
-                      child: Transform.translate(
-                        offset: offset,
-                        child: FoodCard(food: filteredFoods[index]),
-                      ),
-                    );
-                  },
-                );
+                // return PageView.builder(
+                //   controller: PageController(viewportFraction: 0.8),
+                //   physics: const ClampingScrollPhysics(),
+                //   scrollDirection: Axis.horizontal,
+                //   onPageChanged: (index) {
+                //     setState(() {
+                //       currentPage = index;
+                //     });
+                //   },
+                //   itemCount: filteredFoods.length,
+                //   itemBuilder: (context, index) {
+                //     double _scaleFactor = currentPage == index ? 1 : 0.5;
+                //     Offset offset = currentPage == index
+                //         ? const Offset(100, 0)
+                //         : const Offset(220, 400);
+                //
+                //     return Transform.scale(
+                //       scale: _scaleFactor,
+                //       child: Transform.translate(
+                //         offset: offset,
+                //         child: FoodCard(food: filteredFoods[index]),
+                //       ),
+                //     );
+                //   },
+                // );
               },
             ),
           ),

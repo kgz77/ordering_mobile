@@ -23,13 +23,13 @@ class SignUpView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const AuthHeader("Sign Up"),
+            const AuthHeader("Зарегистрироваться"),
             const SizedBox(height: AppTheme.cardPadding),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppTheme.cardPadding * 2),
               child: FodaButton(
                 state: state.isLoadingGoogle ? ButtonState.loading : ButtonState.idle,
-                title: "Sign In With Google",
+                title: "Google",
                 gradiant: const [
                   AppTheme.orange,
                   AppTheme.red,
@@ -43,27 +43,28 @@ class SignUpView extends StatelessWidget {
             ),
             const SizedBox(height: AppTheme.cardPadding),
             Text(
-              "Or with Email",
+              "Или по почте",
               style: Theme.of(context).textTheme.bodyText2?.copyWith(color: AppTheme.grey),
             ),
             const SizedBox(height: AppTheme.cardPadding),
             FodaTextfield(
-              title: "Your Name",
+              title: "Ваше имя",
               controller: state.nameController,
             ),
             const SizedBox(height: AppTheme.elementSpacing),
             FodaTextfield(
-              title: "Your Email",
+              title: "Ваша почта",
               controller: state.emailController,
             ),
             const SizedBox(height: AppTheme.elementSpacing),
             FodaTextfield(
-              title: "Password",
+              isPass: true,
+              title: "Пароль",
               controller: state.passwordController,
             ),
             const SizedBox(height: AppTheme.cardPadding),
             FodaButton(
-              title: "Sign Up",
+              title: "Зарегистрироваться",
               state: state.isLoading ? ButtonState.loading : ButtonState.idle,
               onTap: state.registerUser,
             ),

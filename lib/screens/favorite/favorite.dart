@@ -111,10 +111,12 @@ class _FavoritePageState extends State<FavoritePage> {
                   child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // SvgPicture.asset(
-                    //   "assets/icons/empty-box-icon.svg",
-                    // ),
-                    Text("Пока избранных блюд нет!"),
+                    Container(
+                      height: 300,
+                        width: 300,
+                        child: Image.asset("assets/images/fav.png", )),
+                    SizedBox(height: 30,),
+                    Text("Пока избранных блюд нет!", style: TextStyle(fontSize: 20),),
                   ],
                 ));
         },

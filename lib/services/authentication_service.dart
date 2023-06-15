@@ -43,6 +43,7 @@ class AuthenicationService {
     try {
       final UserCredential authResult = await auth.signInWithEmailAndPassword(email: email, password: password);
       if (authResult.user != null) {
+
         return authResult.user;
       }
       return null;

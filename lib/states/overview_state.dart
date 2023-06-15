@@ -42,20 +42,20 @@ class OverviewState extends BaseState {
     await cartRepo.addOrRemoveFoodFromCart(userRepo.currentUserUID!, food,
         isAdding: isAdding);
     if (isAdding) {
-      showCustomToast("Added 1qty ${food.title} to cart");
+      showCustomToast("${food.title} добавлено в корзину");
     } else {
-      showCustomToast("Removed 1qty ${food.title} from cart");
+      showCustomToast("${food.title} удалено из корзины");
     }
   }
 
   void addToFavorite(Food food) {
     userRepo.addFoodToFavorite(userRepo.currentUserUID!, food);
-    showCustomToast("Added ${food.title} to favorite");
+    showCustomToast("${food.title} добавлено в избранные!");
   }
 
   void removCartItem(Food food) {
     cartRepo.removeFoodFromCart(userRepo.currentUserUID!, food);
-    showCustomToast("Removed ${food.title} from cart");
+    showCustomToast("${food.title} удалено из корзины");
   }
 
   Future<void> openCartView(BuildContext context) async {

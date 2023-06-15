@@ -65,7 +65,7 @@ class CartSummery extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              "Total",
+              "Общая сумма",
               style: Theme.of(context).textTheme.subtitle1?.copyWith(
                     color: AppTheme.grey,
                   ),
